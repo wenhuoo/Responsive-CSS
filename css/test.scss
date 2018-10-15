@@ -1,0 +1,254 @@
+$xlbp: 1200px;
+$lgbp: 992px;
+$mdbp: 768px;
+$smbp: 576px;
+
+//colors
+$black:  black;
+
+$pics: ('list-item-1-tile', 'list-item-2-tile', 'list-item-3-tile', 'list-item-4-tile', 'list-item-5-tile', 'list-item-6-tile', 'list-item-7-tile', 'list-item-8-tile');
+
+$contents: ('list-item-1-content', 'list-item-2-content', 'list-item-3-content', 'list-item-4-content', 'list-item-5-content', 'list-item-6-content', 'list-item-7-content', 'list-item-8-content');
+
+
+.triangle-row {
+	height: 14px;
+}
+.list-item-content {
+	margin-top: 5px;
+}
+.card {
+	border-top: solid $black 3px;
+}
+.triangle-up {
+	width: 0;
+	height: 0;
+	border-left: 15px solid transparent;
+	border-right: 15px solid transparent;
+	border-bottom: 15px solid $black;
+	position: absolute;
+	left: 50%;
+	margin-left: -15px;
+}
+
+#accordion {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+}
+
+@mixin flexColumn {
+    flex-direction: column;
+}
+/* reorder div loop */
+@mixin loop($bp) {
+    @for $i from 1 through length($pics) {
+        ##{nth($pics, $i)} {
+            order: divOrder(nth($pics, $i), $bp);
+        }
+        ##{nth($contents, $i)} {
+            order: divOrder(nth($contents, $i), $bp);
+        }
+    }
+}
+
+@function colNum($bp) {
+    @if $bp == $xlbp {
+        $num: 4;
+        @return $num;
+    }
+    @else if $bp==$lgbp {
+        $num: 3;
+        @return $num;
+    }
+    @else if $bp==$mdbp {
+        $num: 2;
+        @return $num;
+    }
+    @else if $bp==$smbp {
+        $num: 1;
+        @return $num;
+    }
+}
+@function rowNum($length, $bp) {
+    $num: ($length - $length%colNum($bp))/4;
+}
+
+
+@function divOrder($div, $bp) {
+    @if $bp == $xlbp {
+        @if $div == nth($pics, 1) or $div == nth($pics, 2) or $div == nth($pics, 3) or $div == nth($pics, 4) {
+            $value : 0;
+            @return $value;
+        }
+        @else if $div == nth($contents, 1) or $div == nth($contents, 2) or $div == nth($contents, 3) or $div == nth($contents, 4) {
+            $value : 1;
+            @return $value;
+        }
+        @else if $div == nth($pics, 5) or $div == nth($pics, 6) or $div == nth($pics, 7) or $div == nth($pics, 8) {
+            $value : 2;
+            @return $value;
+        }
+        @else if $div == nth($contents, 5) or $div == nth($contents, 6) or $div == nth($contents, 7) or $div == nth($contents, 8) {
+            $value : 3;
+            @return $value;
+        }
+    }
+    @else if $bp == $lgbp {
+        @if $div == nth($pics, 1) or $div == nth($pics, 2) or $div == nth($pics, 3) {
+            $value : 0;
+            @return $value;
+        }
+        @else if $div == nth($contents, 1) or $div == nth($contents, 2) or $div == nth($contents, 3) {
+            $value : 1;
+            @return $value;
+        }
+        @else if $div == nth($pics, 4) or $div == nth($pics, 5) or $div == nth($pics, 6) {
+            $value : 2;
+            @return $value;
+        }
+        @else if $div == nth($contents, 4) $div == nth($contents, 5) or $div == nth($contents, 6) {
+            $value : 3;
+            @return $value;
+        }
+        @else if $div == nth($pics, 7) or $div == nth($pics, 8) {
+            $value : 4;
+            @return $value;
+        }
+        @else if $div == nth($contents, 7) or $div == nth($contents, 8) {
+            $value : 5;
+            @return $value;
+        }
+    }
+    @else if $bp == $mdbp {
+        @if $div == nth($pics, 1) or $div == nth($pics, 2) {
+            $value : 0;
+            @return $value;
+        }
+        @else if $div == nth($contents, 1) or $div == nth($contents, 2) {
+            $value : 1;
+            @return $value;
+        }
+        @else if $div == nth($pics, 3) or $div == nth($pics, 4) {
+            $value : 2;
+            @return $value;
+        }
+        @else if $div == nth($contents, 3) or $div == nth($contents, 4) {
+            $value : 3;
+            @return $value;
+        }
+        @else if $div == nth($pics, 5) or $div == nth($pics, 6) {
+            $value : 4;
+            @return $value;
+        }
+        @else if $div == nth($contents, 5) or $div == nth($contents, 6) {
+            $value : 5;
+            @return $value;
+        }
+        @else if $div == nth($pics, 7) or $div == nth($pics, 8) {
+            $value : 6;
+            @return $value;
+        }
+        @else if $div == nth($contents, 7) or $div == nth($contents, 8) {
+            $value : 7;
+            @return $value;
+        }
+    }
+    @else if $bp == $smbp {
+        @if $div == nth($pics, 1) {
+            $value : 0;
+            @return $value;
+        }
+        @else if $div == nth($contents, 1) {
+            $value : 1;
+            @return $value;
+        }
+        @else if $div == nth($pics, 2) {
+            $value : 2;
+            @return $value;
+        }
+        @else if $div == nth($contents, 2) {
+            $value : 3;
+            @return $value;
+        }
+        @else if $div == nth($pics, 3) {
+            $value : 4;
+            @return $value;
+        }
+        @else if $div == nth($contents, 3) {
+            $value : 5;
+            @return $value;
+        }
+        @else if $div == nth($pics, 4) {
+            $value : 6;
+            @return $value;
+        }
+        @else if $div == nth($contents, 4) {
+            $value : 7;
+            @return $value;
+        }
+        @else if $div == nth($contents, 5) {
+            $value : 8;
+            @return $value;
+        }
+        @else if $div == nth($pics, 5) {
+            $value : 9;
+            @return $value;
+        }
+        @else if $div == nth($contents, 6) {
+            $value : 10;
+            @return $value;
+        }
+        @else if $div == nth($pics, 6) {
+            $value : 11;
+            @return $value;
+        }
+        @else if $div == nth($contents, 7) {
+            $value : 12;
+            @return $value;
+        }
+        @else if $div == nth($pics, 7) {
+            $value : 13;
+            @return $value;
+        }
+        @else if $div == nth($pics, 8) {
+            $value : 14;
+            @return $value;
+        }
+        @else if $div == nth($contents, 8) {
+            $value : 15;
+            @return $value;
+        }
+    }
+}
+
+/* xl break point re-order */
+@media only screen and (min-width: $xlbp) {
+    #accordion {
+        @include flexColumn;
+    }
+    @include loop($xlbp);
+}
+/* lg break point re-order */
+@media only screen and (min-width: $lgbp) and (max-width: $xlbp) {
+    #accordion {
+        @include flexColumn;
+    }
+    @include loop($lgbp);
+}
+/* md break point re-order */
+@media only screen and (min-width: $smbp) and (max-width: $lgbp) {
+    #accordion {
+        @include flexColumn;
+    }
+    @include loop($mdbp);
+}
+
+/* sm break point re-order */
+@media only screen and (max-width: $smbp) {
+    #accordion {
+        @include flexColumn;
+    }
+    @include loop($smbp);
+}
+

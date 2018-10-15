@@ -1,0 +1,106 @@
+$xlbp: 1200px;
+$lgbp: 992px;
+$mdbp: 768px;
+$smbp: 576px;
+
+$pics: ('list-item-1-tile', 'list-item-2-tile', 'list-item-3-tile', 'list-item-4-tile', 'list-item-5-tile', 'list-item-6-tile', 'list-item-7-tile', 'list-item-8-tile');
+
+$contents: ('list-item-1-content', 'list-item-2-content', 'list-item-3-content', 'list-item-4-content', 'list-item-5-content', 'list-item-6-content', 'list-item-7-content', 'list-item-8-content');
+
+#accordion {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+}
+$value: 0;
+
+@mixin flexColumn {
+    flex-direction: column;
+}
+/* reorder div loop */
+@mixin loop($bp) {
+    @for $i from 1 through length($pics) {
+        ##{nth($pics, $i)} {
+            order: divOrder(nth($pics, $i), $bp);
+        }
+        ##{nth($contents, $i)} {
+            order: divOrder(nth($contents, $i), $bp);
+        }
+    }
+}
+
+@function colNum($bp) {
+    @if $bp == $xlbp {
+        $num: 4;
+        @return $num;
+    }
+    @else if $bp==$lgbp {
+        $num: 3;
+        @return $num;
+    }
+    @else if $bp==$mdbp {
+        $num: 2;
+        @return $num;
+    }
+    @else if $bp==$smbp {
+        $num: 1;
+        @return $num;
+    }
+}
+
+@function rowNum($length, $bp) {
+    $r: $length % colNum($bp);
+    $num: 1;
+    @if $r == 0 {
+        $num: $length / colNum($bp);
+    }
+    @else {
+        $num: ($length - $r) / colNum($bp) + 1;
+    }
+    
+    @return $num;
+}
+
+@function divOrder($div, $bp) {
+    @for $row from 1 through rowNum(length($pics), $bp) {
+        @for $col from colNum($bp) * $row - colNum($bp) + 1 through colNum($bp) * $row {
+            @if $div==nth($pics, $col) {
+                $value: ($row - 1)*2;
+            }
+            @else if $div == nth($contents, $col) {
+                $value: $row * 2 - 1;
+            }
+            @return $value;
+        }
+    }
+}
+
+/* xl break point re-order */
+@media only screen and (min-width: $xlbp) {
+    #accordion {
+        @include flexColumn;
+    }
+    @include loop($xlbp);
+}
+/* lg break point re-order */
+@media only screen and (min-width: $lgbp) and (max-width: $xlbp) {
+    #accordion {
+        @include flexColumn;
+    }
+    @include loop($lgbp);
+}
+/* md break point re-order */
+@media only screen and (min-width: $smbp) and (max-width: $lgbp) {
+    #accordion {
+        @include flexColumn;
+    }
+    @include loop($mdbp);
+}
+
+/* sm break point re-order */
+@media only screen and (max-width: $smbp) {
+    #accordion {
+        @include flexColumn;
+    }
+    @include loop($smbp);
+}
