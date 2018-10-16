@@ -4,6 +4,10 @@
     justify-content: space-between;
 }
 
+body {
+    overflow: scroll;
+}
+
 .triangle-row{
     height: 14px;
 }
